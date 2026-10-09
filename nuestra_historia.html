@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Rhythms, One Story | Taila & Me</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        handwriting: ['Caveat', 'cursive'],
+                    },
+                    colors: {
+                        tropical: {
+                            light: '#FFF9F2', // Soft peach/cream
+                            peach: '#FFDAB9',
+                            yellow: '#F4D03F', // Venezuela warm yellow
+                            green: '#1E8449', // Brazil/Cork green
+                            orange: '#E67E22', // Salamanca stone orange
+                            dark: '#2C3E50'
+                        }
+                    },
+                    boxShadow: {
+                        'polaroid': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #FFF9F2 0%, #FDF2E9 100%);
+            color: #2C3E50;
+        }
+
+        /* Custom Shapes & Background Patterns */
+        .bg-pattern {
+            background-image: radial-gradient(#E67E22 0.5px, transparent 0.5px), radial-gradient(#E67E22 0.5px, #FFF9F2 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.1;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-delayed {
+            animation: float 7s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
+        }
+        
+        .dashed-line {
+            stroke-dasharray: 10;
+            animation: dash 1s linear infinite;
+        }
+
+        /* Polaroid Styles */
+        .polaroid {
+            background: white;
+            padding: 1rem 1rem 3rem 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .polaroid:hover {
+            transform: scale(1.02) translateY(-5px) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 3/4;
+            border: 1px solid #f0f0f0;
+        }
+        
+        /* Modal Transitions */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            transition: opacity 300ms, transform 300ms;
+        }
+        .modal-exit {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+            transition: opacity 300ms, transform 300ms;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <div class="bg-pattern"></div>
+
+    <header class="w-full min-h-[70vh] flex flex-col justify-center items-center text-center px-4 relative pt-12 pb-20">
+        <!-- Decorative Hearts -->
+        <div class="absolute top-20 left-10 text-tropical-orange opacity-50 text-2xl floating hidden md:block"><i class="fa-solid fa-heart"></i></div>
+        <div class="absolute top-40 right-20 text-tropical-green opacity-50 text-3xl floating-delayed hidden md:block"><i class="fa-solid fa-leaf"></i></div>
+        <div class="absolute bottom-20 left-1/4 text-red-400 opacity-60 text-xl floating-delayed"><i class="fa-solid fa-heart"></i></div>
+
+        <div class="inline-flex items-center justify-center space-x-4 mb-6">
+            <span class="text-4xl">🇻🇪</span>
+            <span class="text-2xl text-red-500 animate-pulse"><i class="fa-solid fa-heart"></i></span>
+            <span class="text-4xl">🇧🇷</span>
+        </div>
+        
+        <h1 class="font-serif text-5xl md:text-7xl font-bold text-tropical-dark mb-6 leading-tight">
+            Two Rhythms, <br> <span class="text-tropical-orange italic">One Story</span>
+        </h1>
+        
+        <div class="max-w-2xl mx-auto space-y-4">
+            <p class="font-serif text-xl md:text-2xl text-gray-700 italic">
+                From Salamanca to Cork...
+            </p>
+            <div class="bg-white/60 backdrop-blur-sm rounded-full py-3 px-6 md:px-10 inline-block border border-tropical-orange/20 shadow-sm">
+                <p class="font-sans text-lg text-gray-800 font-medium">
+                    <i class="fa-solid fa-plane-departure text-tropical-orange mr-2"></i>
+                    1,500 km away, but <span class="text-red-500 font-bold">0 cm</span> between our hearts.
+                </p>
+            </div>
+        </div>
+        
+        <a href="#connection" class="mt-16 text-tropical-dark hover:text-tropical-orange transition duration-300 animate-bounce cursor-pointer text-2xl">
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
+    </header>
+
+    <main class="flex-grow">
+        <section id="connection" class="py-20 px-4 max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-8 lg:gap-24">
+                
+                <!-- Polaroid 1: Me in Salamanca -->
+                <div class="w-72 md:w-80 transform -rotate-3 polaroid">
+                    <img src="Luis.jpeg" alt="Me in Salamanca" class="w-full h-80 object-cover" onerror="this.src='https://placehold.co/400x500/E67E22/FFF9F2?text=Me+in+Salamanca'; this.alt='Placeholder Image'">
+                    <div class="absolute bottom-4 left-0 w-full text-center">
+                        <p class="font-handwriting text-3xl text-yellow-800 font-bold">Luis in Salamanca</p>
+                        <p class="text-xs font-sans text-gray-500 uppercase tracking-widest mt-1"><i class="fa-solid fa-location-dot text-tropical-orange mr-1"></i> Spain 🇪🇸</p>
+                    </div>
+                </div>
+
+                <!-- Connection Graphic -->
+                <div class="flex flex-col items-center justify-center w-full md:w-auto h-24 md:h-auto">
+                    <div class="hidden md:block w-32 lg:w-48 relative">
+                        <svg width="100%" height="40" viewBox="0 0 200 40">
+                            <path d="M 0,20 Q 100,-10 200,20" fill="transparent" stroke="#E67E22" stroke-width="2" class="dashed-line" />
+                        </svg>
+                        <i class="fa-solid fa-plane text-tropical-orange absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -mt-4 text-xl rotate-12"></i>
+                    </div>
+                    <div class="md:hidden flex flex-col items-center">
+                        <div class="h-16 border-l-2 border-dashed border-tropical-orange"></div>
+                        <i class="fa-solid fa-plane text-tropical-orange my-2 transform rotate-90 text-xl"></i>
+                        <div class="h-16 border-l-2 border-dashed border-tropical-orange"></div>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2: Taila in Cork -->
+                <div class="w-72 md:w-80 transform rotate-3 polaroid z-10">
+                    <img src="Taila.jpeg" alt="Taila in Cork" class="w-full h-80 object-cover" onerror="this.src='https://placehold.co/400x500/1E8449/FFF9F2?text=Taila+in+Cork'; this.alt='Placeholder Image'">
+                    <div class="absolute bottom-4 left-0 w-full text-center">
+                        <p class="font-handwriting text-3xl text-gray-800 font-bold">Taila in Cork</p>
+                        <p class="text-xs font-sans text-gray-500 uppercase tracking-widest mt-1"><i class="fa-solid fa-location-dot text-tropical-green mr-1"></i> Ireland 🇮🇪</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-16 max-w-2xl mx-auto">
+                <p class="font-serif text-xl text-gray-700 leading-relaxed italic">
+                    "Though our coordinates are different, we share the same sky, the same feelings, and the same dream of being together again."
+                </p>
+            </div>
+        </section>
+
+        <section id="culture" class="py-24 bg-white/40 border-y border-white/60">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="font-serif text-4xl font-bold text-tropical-dark mb-4">The Perfect Blend</h2>
+                    <p class="font-sans text-gray-600">Venezuela & Brazil: A love story told through food, rhythm, and warmth.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <!-- Food Card -->
+                    <div class="bg-white p-8 rounded-3xl shadow-lg border-t-4 border-tropical-yellow transform transition hover:-translate-y-2 duration-300">
+                        <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mb-6 text-3xl">
+                            🌽🧀
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-gray-800 mb-4">Arepas & Pão de Queijo</h3>
+                        <p class="text-gray-600 leading-relaxed mb-4">
+                            A culinary match made in heaven. Just like us, they bring their own unique flavors, but when you put them together, it's an absolute masterpiece. 
+                        </p>
+                        <p class="font-handwriting text-xl text-tropical-orange mt-4">Saving a warm Arepa for you!</p>
+                    </div>
+
+                    <!-- Music Card -->
+                    <div class="bg-white p-8 rounded-3xl shadow-lg border-t-4 border-tropical-green transform transition hover:-translate-y-2 duration-300">
+                        <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-6 text-3xl text-tropical-green">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-gray-800 mb-4">Samba & Joropo</h3>
+                        <p class="text-gray-600 leading-relaxed mb-4">
+                            Two different beats, one beautiful dance. Bringing the joy of Brazil to the energy of Venezuela. No matter where we are, our hearts always beat to the same rhythm.
+                        </p>
+                        <p class="font-handwriting text-xl text-tropical-green mt-4">Que saudade do seu abraço!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="survival-kit" class="py-24 px-4 max-w-4xl mx-auto text-center">
+            <h2 class="font-serif text-4xl font-bold text-tropical-dark mb-6">Cork Survival Kit ☔</h2>
+            <p class="font-sans text-gray-600 mb-12 max-w-xl mx-auto">
+                Living in Ireland is beautiful, but sometimes the rain gets a bit much, or the distance feels heavy. Open these whenever you need a little piece of me.
+            </p>
+
+            <div class="flex flex-col gap-6 max-w-md mx-auto">
+                <!-- Button 1 -->
+                <button onclick="openMessage('rain')" class="group relative w-full flex items-center justify-between bg-white border-2 border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-300 text-left overflow-hidden">
+                    <div class="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <span class="relative z-10 font-medium text-gray-700 group-hover:text-blue-800 transition-colors text-lg">Click when it rains in Cork</span>
+                    <span class="relative z-10 text-2xl transform group-hover:scale-110 transition-transform">🌧️</span>
+                </button>
+
+                <!-- Button 2 -->
+                <button onclick="openMessage('hug')" class="group relative w-full flex items-center justify-between bg-white border-2 border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-red-200 transition-all duration-300 text-left overflow-hidden">
+                    <div class="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <span class="relative z-10 font-medium text-gray-700 group-hover:text-red-800 transition-colors text-lg">Click when you need a hug</span>
+                    <span class="relative z-10 text-2xl transform group-hover:scale-110 transition-transform">🫂</span>
+                </button>
+
+                <!-- Button 3 -->
+                <button onclick="openMessage('home')" class="group relative w-full flex items-center justify-between bg-white border-2 border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-green-200 transition-all duration-300 text-left overflow-hidden">
+                    <div class="absolute inset-0 bg-green-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <span class="relative z-10 font-medium text-gray-700 group-hover:text-green-800 transition-colors text-lg">Click when you miss home</span>
+                    <span class="relative z-10 text-2xl transform group-hover:scale-110 transition-transform">🏠</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white/80 py-10 border-t border-gray-100 mt-auto text-center backdrop-blur-sm">
+        <p class="font-handwriting text-3xl text-tropical-dark font-bold mb-2">Com amor, for Taila ❤️</p>
+        <p class="text-sm text-gray-500 uppercase tracking-widest font-sans">Salamanca 〰️ Cork</p>
+    </footer>
+
+    <!-- Custom Modal Backdrop -->
+    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40 backdrop-blur-sm modal-enter hidden">
+        <!-- Modal Content Box -->
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-8 text-center relative border-t-8" id="modal-box">
+            
+            <!-- Close button -->
+            <button onclick="closeMessage()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors rounded-full p-2 hover:bg-gray-100">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Dynamic content -->
+            <div id="modal-icon" class="text-6xl mb-6 mt-2 floating">☀️</div>
+            <h3 id="modal-title" class="font-serif text-2xl font-bold mb-4 text-gray-800">Title</h3>
+            <div class="h-px w-16 bg-gray-200 mx-auto mb-4"></div>
+            <p id="modal-text" class="text-gray-600 leading-relaxed font-sans text-lg mb-8">Message goes here</p>
+            
+            <button onclick="closeMessage()" class="w-full bg-gray-900 text-white font-medium py-3 px-6 rounded-xl hover:bg-gray-800 transition-colors shadow-md">
+                Te quiero mucho 💕
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Data for the custom modal based on the button clicked
+        const messages = {
+            'rain': {
+                icon: '☀️',
+                title: 'A little pocket of sunshine',
+                text: 'Here is a pocketful of Salamanca sunshine and a warm hug from me. Don\'t let the grey skies get you down, you carry the tropical light inside you!',
+                borderColor: '#F4D03F' // Yellow border
+            },
+            'hug': {
+                icon: '🤗',
+                title: 'Wrapping you up',
+                text: 'Wrapping my arms tightly around you from 1,500km away. Close your eyes for a second, take a deep breath... you\'ve got this, meu amor!',
+                borderColor: '#E74C3C' // Red border
+            },
+            'home': {
+                icon: '🇧🇷🎶',
+                title: 'Cheirinho de casa',
+                text: 'Put on some Bossa Nova, imagine the smell of fresh, hot Pão de Queijo coming out of the oven, and remember... wherever I am, I am your home, and you are mine.',
+                borderColor: '#1E8449' // Green border
+            }
+        };
+
+        const modalOverlay = document.getElementById('custom-modal');
+        const modalBox = document.getElementById('modal-box');
+        
+        function openMessage(type) {
+            // Populate content
+            const data = messages[type];
+            document.getElementById('modal-icon').innerText = data.icon;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-text').innerText = data.text;
+            
+            // Set border color
+            modalBox.style.borderTopColor = data.borderColor;
+            
+            // Show modal
+            modalOverlay.classList.remove('hidden');
+            // Small delay to allow display:block to apply before animating opacity
+            setTimeout(() => {
+                modalOverlay.classList.remove('modal-enter');
+                modalOverlay.classList.add('modal-enter-active');
+            }, 10);
+        }
+
+        function closeMessage() {
+            // Trigger exit animation
+            modalOverlay.classList.remove('modal-enter-active');
+            modalOverlay.classList.add('modal-exit');
+            
+            // Hide after animation finishes
+            setTimeout(() => {
+                modalOverlay.classList.add('hidden');
+                modalOverlay.classList.remove('modal-exit');
+                modalOverlay.classList.add('modal-enter'); // reset state
+            }, 300);
+        }
+
+        // Close when clicking outside the modal content
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closeMessage();
+            }
+        });
+        
+        // Ensure images don't stretch weirdly on resize
+        window.addEventListener('resize', () => {
+            const images = document.querySelectorAll('.polaroid img');
+            images.forEach(img => {
+                img.style.objectFit = 'cover';
+            });
+        });
+    </script>
+</body>
+</html>
